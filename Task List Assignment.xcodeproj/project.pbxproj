@@ -21,6 +21,10 @@
 		A396C19F19196D7400BAB165 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A396C18119196D7400BAB165 /* UIKit.framework */; };
 		A396C1A719196D7400BAB165 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A396C1A519196D7400BAB165 /* InfoPlist.strings */; };
 		A396C1A919196D7400BAB165 /* Task_List_AssignmentTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A396C1A819196D7400BAB165 /* Task_List_AssignmentTests.m */; };
+		A396C1B419196FD200BAB165 /* AddTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A396C1B319196FD200BAB165 /* AddTaskViewController.m */; };
+		A396C1B719196FF200BAB165 /* DetailTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A396C1B619196FF200BAB165 /* DetailTaskViewController.m */; };
+		A396C1BA1919701400BAB165 /* EditTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A396C1B91919701400BAB165 /* EditTaskViewController.m */; };
+		A396C1BD1919818100BAB165 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = A396C1BC1919818100BAB165 /* Task.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +57,14 @@
 		A396C1A419196D7400BAB165 /* Task List AssignmentTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Task List AssignmentTests-Info.plist"; sourceTree = "<group>"; };
 		A396C1A619196D7400BAB165 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A396C1A819196D7400BAB165 /* Task_List_AssignmentTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Task_List_AssignmentTests.m; sourceTree = "<group>"; };
+		A396C1B219196FD200BAB165 /* AddTaskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTaskViewController.h; sourceTree = "<group>"; };
+		A396C1B319196FD200BAB165 /* AddTaskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTaskViewController.m; sourceTree = "<group>"; };
+		A396C1B519196FF200BAB165 /* DetailTaskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailTaskViewController.h; sourceTree = "<group>"; };
+		A396C1B619196FF200BAB165 /* DetailTaskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailTaskViewController.m; sourceTree = "<group>"; };
+		A396C1B81919701400BAB165 /* EditTaskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTaskViewController.h; sourceTree = "<group>"; };
+		A396C1B91919701400BAB165 /* EditTaskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTaskViewController.m; sourceTree = "<group>"; };
+		A396C1BB1919818100BAB165 /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
+		A396C1BC1919818100BAB165 /* Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Task.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +129,14 @@
 				A396C18F19196D7400BAB165 /* Main.storyboard */,
 				A396C19219196D7400BAB165 /* ViewController.h */,
 				A396C19319196D7400BAB165 /* ViewController.m */,
+				A396C1B219196FD200BAB165 /* AddTaskViewController.h */,
+				A396C1B319196FD200BAB165 /* AddTaskViewController.m */,
+				A396C1B519196FF200BAB165 /* DetailTaskViewController.h */,
+				A396C1B619196FF200BAB165 /* DetailTaskViewController.m */,
+				A396C1B81919701400BAB165 /* EditTaskViewController.h */,
+				A396C1B91919701400BAB165 /* EditTaskViewController.m */,
+				A396C1BB1919818100BAB165 /* Task.h */,
+				A396C1BC1919818100BAB165 /* Task.m */,
 				A396C19519196D7400BAB165 /* Images.xcassets */,
 				A396C18419196D7400BAB165 /* Supporting Files */,
 			);
@@ -249,9 +269,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A396C1BD1919818100BAB165 /* Task.m in Sources */,
 				A396C19419196D7400BAB165 /* ViewController.m in Sources */,
+				A396C1B419196FD200BAB165 /* AddTaskViewController.m in Sources */,
 				A396C18E19196D7400BAB165 /* AppDelegate.m in Sources */,
+				A396C1BA1919701400BAB165 /* EditTaskViewController.m in Sources */,
 				A396C18A19196D7400BAB165 /* main.m in Sources */,
+				A396C1B719196FF200BAB165 /* DetailTaskViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

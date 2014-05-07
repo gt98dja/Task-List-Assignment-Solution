@@ -7,7 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AddTaskViewController.h"
+#import "DetailTaskViewController.h"
+#import "EditTaskViewController.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <AddTaskViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, EditTaskViewControllerDelegate>
+
+//IBOutlets
+@property (strong, nonatomic) IBOutlet UITableView *taskTableView;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *reorderButton;
+
+//Variables
+@property (strong, nonatomic) NSMutableArray *addedTasks;
+@property(nonatomic, getter=isEditing) BOOL editing;
+
+//Actions
+- (IBAction)addTaskButtonPressed:(UIBarButtonItem *)sender;
+- (IBAction)reorderButtonPressed:(UIBarButtonItem *)sender;
 
 @end
