@@ -24,10 +24,12 @@
 @property (strong, nonatomic) IBOutlet UITextField *taskTitleTextField;
 @property (strong, nonatomic) IBOutlet UITextView *taskInfoTextView;
 @property (strong, nonatomic) IBOutlet UIDatePicker *taskDatePicker;
+@property (strong, nonatomic) IBOutlet UIButton *completeTaskButton;
 
 @property (strong, nonatomic) Task *editTask;
 @property (strong, nonatomic) NSIndexPath *sourceIndexPath;
 
 - (IBAction)saveEditTaskButtonPressed:(UIBarButtonItem *)sender;
+- (IBAction)completeTaskButtonPressed:(UIButton *)sender;
 
 @end

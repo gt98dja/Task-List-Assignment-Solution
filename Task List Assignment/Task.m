@@ -25,6 +25,7 @@
     self.taskDate = data[TASK_DATE];
     self.taskCompletion = [data[TASK_COMPLETION] boolValue];
     
+    
     return self;
 }
 

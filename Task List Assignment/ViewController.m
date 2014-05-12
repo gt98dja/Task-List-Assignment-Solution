@@ -16,12 +16,36 @@
 
 #pragma mark - Lazy Instantiation of Properties
 
--(NSMutableArray *)addedTasks
+- (NSMutableArray *)addedTasks
 {
     if (!_addedTasks) {
         _addedTasks = [[NSMutableArray alloc] init];
     }
     return _addedTasks;
+}
+
+- (NSMutableArray *)compleatedTasks
+{
+    if (!_compleatedTasks) {
+        _compleatedTasks = [[NSMutableArray alloc] init];
+    }
+    return _compleatedTasks;
+}
+
+- (NSMutableArray *)overdueTasks
+{
+    if (!_overdueTasks) {
+        _overdueTasks = [[NSMutableArray alloc] init];
+    }
+    return _overdueTasks;
+}
+
+- (NSMutableArray *)toDoTasks
+{
+    if (!_toDoTasks) {
+        _toDoTasks = [[NSMutableArray alloc] init];
+    }
+    return _toDoTasks;
 }
 
 #pragma mark - viewDidLoad
@@ -39,10 +63,13 @@
         Task *task = [self TaskForDictionary:dictionary];
         [self.addedTasks addObject:task];
     }
+    
+    [self sortTasksIntoArrays];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self sortTasksIntoArrays];
     [self saveAddedTasksInUserDefaults];
     [self.taskTableView reloadData]; // to reload selected cell
 }
@@ -64,8 +91,30 @@
     {
         DetailTaskViewController *detailVC = segue.destinationViewController;
         NSIndexPath *senderIndex = sender;
-        detailVC.detailTask = self.addedTasks[senderIndex.row];
+        
+        switch (senderIndex.section)
+        {
+            case 0:
+                detailVC.detailTask = self.overdueTasks[senderIndex.row];
+                [self.overdueTasks removeObjectAtIndex:senderIndex.row];
+                break;
+                
+            case 1:
+                detailVC.detailTask = self.toDoTasks[senderIndex.row];
+                [self.toDoTasks removeObjectAtIndex:senderIndex.row];
+                break;
+                
+            case 2:
+                detailVC.detailTask = self.compleatedTasks[senderIndex.row];
+                [self.compleatedTasks removeObjectAtIndex:senderIndex.row];
+                break;
+                
+            default:
+                break;
+        }
+        
         detailVC.sourceIndexPath = senderIndex;
+        detailVC.delegate = self;
     }
     if ([segue.identifier isEqualToString:@"Push to Edit Task"])
     {
@@ -78,18 +127,55 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.addedTasks count];
+    switch (section)
+    {
+        case 0:
+            return [self.overdueTasks count];
+            break;
+            
+        case 1:
+            return [self.toDoTasks count];
+            break;
+            
+        case 2:
+            return [self.compleatedTasks count];
+            break;
+            
+        default:
+            return 0;
+            break;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self sortTasksIntoArrays];
+    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"taskCell" forIndexPath:indexPath];
-    Task *tempTask = self.addedTasks[indexPath.row];
+    Task *tempTask = [[Task alloc] init];
+    
+    switch (indexPath.section)
+    {
+        case 0:
+            tempTask = self.overdueTasks[indexPath.row];
+            break;
+        
+        case 1:
+            tempTask = self.toDoTasks[indexPath.row];
+            break;
+            
+        case 2:
+            tempTask = self.compleatedTasks[indexPath.row];
+            break;
+            
+        default:
+            break;
+    }
     
     cell.textLabel.text = tempTask.taskTitle;
     
@@ -110,20 +196,33 @@
     {
         if (dateDifference < 0)
         {
-            cell.backgroundColor = [UIColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:1.0];
+            cell.backgroundColor = [UIColor colorWithHue:0.0 saturation:1.0 brightness:0.8 alpha:1.0];
+            cell.textLabel.textColor = [UIColor whiteColor];
+            cell.detailTextLabel.textColor = [UIColor whiteColor];
+            [cell.detailTextLabel setFont:[UIFont boldSystemFontOfSize:12]];
         }
         else if (dateDifference >= 0 && dateDifference < 86400)
         {
-            cell.backgroundColor = [UIColor colorWithRed:1.0 green:0.7 blue:0.2 alpha:(1/(dateDifference/3600))];
+            //cell.backgroundColor = [UIColor colorWithRed:1.0 green:0.7 blue:0.2 alpha:(1/(dateDifference/3600))];
+            cell.backgroundColor = [UIColor colorWithHue:(0.19 - (864/dateDifference)) saturation:1.0 brightness:1.0 alpha:1.0];
+            cell.textLabel.textColor = [UIColor blackColor];
+            cell.detailTextLabel.textColor = [UIColor blackColor];
+            [cell.detailTextLabel setFont:[UIFont systemFontOfSize:12]];
         }
         else
         {
             cell.backgroundColor = [UIColor clearColor];
+            cell.textLabel.textColor = [UIColor blackColor];
+            cell.detailTextLabel.textColor = [UIColor blackColor];
+            [cell.detailTextLabel setFont:[UIFont systemFontOfSize:12]];
         }
     }
     else
     {
         cell.backgroundColor = [UIColor colorWithRed:0.7 green:1.0 blue:0.7 alpha:1.0];
+        cell.textLabel.textColor = [UIColor blackColor];
+        cell.detailTextLabel.textColor = [UIColor blackColor];
+        [cell.detailTextLabel setFont:[UIFont systemFontOfSize:12]];
     }
     
     
@@ -161,6 +260,47 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+- (void)sortTasksIntoArrays
+{
+    [self.compleatedTasks removeAllObjects];
+    [self.overdueTasks removeAllObjects];
+    [self.toDoTasks removeAllObjects];
+    
+    for (Task *task in self.addedTasks) {
+        if (task.taskCompletion) {
+            [self.compleatedTasks addObject:task];
+        }
+        else
+        {
+            NSDate *today = [[NSDate alloc] init];
+            double dateDifference = [task.taskDate timeIntervalSinceDate:today];
+            
+            if (dateDifference < 0)
+            {
+                [self.overdueTasks addObject:task];
+            }
+            else
+            {
+                [self.toDoTasks addObject:task];
+            }
+        }
+    }
+}
+
+- (void)mergeTaskArraysIntoAddedTasksArray
+{
+    [self.addedTasks removeAllObjects];
+    for (Task *task in self.overdueTasks) {
+        [self.addedTasks addObject:task];
+    }
+    for (Task *task in self.toDoTasks) {
+        [self.addedTasks addObject:task];
+    }
+    for (Task *task in self.compleatedTasks) {
+        [self.addedTasks addObject:task];
+    }
+}
+
 #pragma mark - TableView Delegate
 
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
@@ -170,11 +310,47 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Task *selectedTask = self.addedTasks[indexPath.row];
-    [self.addedTasks removeObjectAtIndex:indexPath.row];
-    selectedTask.taskCompletion = !selectedTask.taskCompletion;
-    [self.addedTasks insertObject:selectedTask atIndex:indexPath.row];
+    Task *selectedTask = [[Task alloc] init];
     
+    switch (indexPath.section)
+    {
+        case 0:
+            selectedTask = self.overdueTasks[indexPath.row];
+            [self.overdueTasks removeObjectAtIndex:indexPath.row];
+            selectedTask.taskCompletion = YES;
+            [self.compleatedTasks insertObject:selectedTask atIndex:0];
+            break;
+            
+        case 1:
+            selectedTask = self.toDoTasks[indexPath.row];
+            [self.toDoTasks removeObjectAtIndex:indexPath.row];
+            selectedTask.taskCompletion = YES;
+            [self.compleatedTasks insertObject:selectedTask atIndex:0];
+            break;
+            
+        case 2:
+        {
+            selectedTask = self.compleatedTasks[indexPath.row];
+            [self.compleatedTasks removeObjectAtIndex:indexPath.row];
+            selectedTask.taskCompletion = NO;
+            NSDate *today = [[NSDate alloc] init];
+            double dateDifference = [selectedTask.taskDate timeIntervalSinceDate:today];
+            if (dateDifference < 0)
+            {
+                [self.overdueTasks insertObject:selectedTask atIndex:0];
+            }
+            else
+            {
+                [self.toDoTasks insertObject:selectedTask atIndex:0];
+            }
+            break;
+        }
+        
+        default:
+            break;
+    }
+    
+    [self mergeTaskArraysIntoAddedTasksArray];
     [self saveAddedTasksInUserDefaults];
     
     [self.taskTableView reloadData];
@@ -193,21 +369,71 @@
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
 {
-    Task *reorderdTask = self.addedTasks[sourceIndexPath.row];
-    [self.addedTasks removeObjectAtIndex:sourceIndexPath.row];
-    [self.addedTasks insertObject:reorderdTask atIndex:destinationIndexPath.row];
+    Task *reorderdTask = [[Task alloc] init];
+    
+    if (sourceIndexPath.section == destinationIndexPath.section) {
+        switch (sourceIndexPath.section)
+        {
+            case 0:
+                reorderdTask = self.overdueTasks[sourceIndexPath.row];
+                [self.overdueTasks removeObjectAtIndex:sourceIndexPath.row];
+                [self.overdueTasks insertObject:reorderdTask atIndex:destinationIndexPath.row];
+                break;
+                
+            case 1:
+                reorderdTask = self.toDoTasks[sourceIndexPath.row];
+                [self.toDoTasks removeObjectAtIndex:sourceIndexPath.row];
+                [self.toDoTasks insertObject:reorderdTask atIndex:destinationIndexPath.row];
+                break;
+                
+            case 2:
+                reorderdTask = self.compleatedTasks[sourceIndexPath.row];
+                [self.compleatedTasks removeObjectAtIndex:sourceIndexPath.row];
+                [self.compleatedTasks insertObject:reorderdTask atIndex:destinationIndexPath.row];
+                break;
+                
+            default:
+                break;
+        }
+    }
+    
+    
+    [self mergeTaskArraysIntoAddedTasksArray];
     [self saveAddedTasksInUserDefaults];
+    
+    [self.taskTableView reloadData];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        [self.addedTasks removeObjectAtIndex:indexPath.row];
-        
-        [self saveAddedTasksInUserDefaults];
+        switch (indexPath.section)
+        {
+            case 0:
+                [self.overdueTasks removeObjectAtIndex:indexPath.row];
+                break;
+                
+            case 1:
+                [self.toDoTasks removeObjectAtIndex:indexPath.row];
+                break;
+                
+            case 2:
+                [self.compleatedTasks removeObjectAtIndex:indexPath.row];
+                break;
+                
+            default:
+                break;
+        }
         
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
+        [self mergeTaskArraysIntoAddedTasksArray];
+        [self saveAddedTasksInUserDefaults];
+        
+        [self.taskTableView reloadData];
+        
+        //
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }
@@ -239,6 +465,7 @@
     [self.addedTasks addObject:task];
     [self saveAddedTasksInUserDefaults];
     [self dismissViewControllerAnimated:YES completion:nil];
+    [self sortTasksIntoArrays];
     [self.taskTableView reloadData];
 }
 
@@ -246,9 +473,52 @@
 
 - (void) didSaveEdit:(Task *)editedTask destinationIndexPath:(NSIndexPath *)indexPath
 {
-    [self.addedTasks removeObjectAtIndex:indexPath.row];
-    [self.addedTasks insertObject:editedTask atIndex:indexPath.row];
+    if (editedTask.taskCompletion) {
+        [self.compleatedTasks insertObject:editedTask atIndex:0];
+    }
+    else
+    {
+        NSDate *today = [[NSDate alloc] init];
+        double dateDifference = [editedTask.taskDate timeIntervalSinceDate:today];
+        
+        if (dateDifference < 0)
+        {
+            [self.overdueTasks insertObject:editedTask atIndex:0];
+        }
+        else
+        {
+            [self.toDoTasks insertObject:editedTask atIndex:0];
+        }
+    }
+    
+    [self mergeTaskArraysIntoAddedTasksArray];
     [self saveAddedTasksInUserDefaults];
+    
+    [self.taskTableView reloadData];
+}
+
+#pragma mark - DetailTaskVC Delegate
+
+- (Task *)getUpdatedDetails:(NSIndexPath *)forIndexPath
+{
+    switch (forIndexPath.section)
+    {
+        case 0:
+            return self.overdueTasks[forIndexPath.row];
+            break;
+            
+        case 1:
+            return self.toDoTasks[forIndexPath.row];
+            break;
+            
+        case 2:
+            return self.compleatedTasks[forIndexPath.row];
+            break;
+            
+        default:
+            return [[Task alloc] initWithData:nil];
+            break;
+    }
 }
 
 @end

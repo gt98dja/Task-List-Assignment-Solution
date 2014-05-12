@@ -11,7 +11,7 @@
 #import "DetailTaskViewController.h"
 #import "EditTaskViewController.h"
 
-@interface ViewController : UIViewController <AddTaskViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, EditTaskViewControllerDelegate>
+@interface ViewController : UIViewController <AddTaskViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, EditTaskViewControllerDelegate, DetailTaskViewControllerDelegate>
 
 //IBOutlets
 @property (strong, nonatomic) IBOutlet UITableView *taskTableView;
@@ -19,6 +19,9 @@
 
 //Variables
 @property (strong, nonatomic) NSMutableArray *addedTasks;
+@property (strong, nonatomic) NSMutableArray *compleatedTasks;
+@property (strong, nonatomic) NSMutableArray *overdueTasks;
+@property (strong, nonatomic) NSMutableArray *toDoTasks;
 @property(nonatomic, getter=isEditing) BOOL editing;
 
 //Actions

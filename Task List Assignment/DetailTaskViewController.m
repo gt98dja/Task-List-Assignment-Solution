@@ -37,7 +37,28 @@
     dateFormatter.doesRelativeDateFormatting = YES;
     NSString *dateString = [dateFormatter stringFromDate:self.detailTask.taskDate];
     self.taskDateLabel.text = [NSString stringWithFormat:@"%@", dateString];
+    if (self.detailTask.taskCompletion)
+    {
+        [self.completeTaskButton setTitle:@"✔️ Task Completed" forState:UIControlStateNormal];
+    }
+    else
+    {
+        [self.completeTaskButton setTitle:@"Complete Task" forState:UIControlStateNormal];
+    }
     
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if (self.detailTask.taskCompletion)
+    {
+        [self.completeTaskButton setTitle:@"✔️ Task Completed" forState:UIControlStateNormal];
+    }
+    else
+    {
+        [self.completeTaskButton setTitle:@"Complete Task" forState:UIControlStateNormal];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -64,6 +85,19 @@
 - (IBAction)editTaskButtonPressed:(UIBarButtonItem *)sender
 {
     [self performSegueWithIdentifier:@"Push to Edit Task" sender:sender];
+}
+
+- (IBAction)completeTaskButtonPressed:(UIButton *)sender
+{
+    self.detailTask.taskCompletion = !self.detailTask.taskCompletion;
+    if (self.detailTask.taskCompletion)
+    {
+        [self.completeTaskButton setTitle:@"✔️ Task Completed" forState:UIControlStateNormal];
+    }
+    else
+    {
+        [self.completeTaskButton setTitle:@"Complete Task" forState:UIControlStateNormal];
+    }
 }
 
 @end

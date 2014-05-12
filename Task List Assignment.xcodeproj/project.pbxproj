@@ -25,6 +25,13 @@
 		A396C1B719196FF200BAB165 /* DetailTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A396C1B619196FF200BAB165 /* DetailTaskViewController.m */; };
 		A396C1BA1919701400BAB165 /* EditTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A396C1B91919701400BAB165 /* EditTaskViewController.m */; };
 		A396C1BD1919818100BAB165 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = A396C1BC1919818100BAB165 /* Task.m */; };
+		A3EB94BA191C3BB00053E022 /* bild 1.JPG in Resources */ = {isa = PBXBuildFile; fileRef = A3EB94B6191C3BB00053E022 /* bild 1.JPG */; };
+		A3EB94BB191C3BB00053E022 /* bild 2.JPG in Resources */ = {isa = PBXBuildFile; fileRef = A3EB94B7191C3BB00053E022 /* bild 2.JPG */; };
+		A3EB94BC191C3BB00053E022 /* bild 3.JPG in Resources */ = {isa = PBXBuildFile; fileRef = A3EB94B8191C3BB00053E022 /* bild 3.JPG */; };
+		A3EB94BD191C3BB00053E022 /* bild 4.JPG in Resources */ = {isa = PBXBuildFile; fileRef = A3EB94B9191C3BB00053E022 /* bild 4.JPG */; };
+		A3EB94C1191CCE9C0053E022 /* 58.png in Resources */ = {isa = PBXBuildFile; fileRef = A3EB94BE191CCE9C0053E022 /* 58.png */; };
+		A3EB94C2191CCE9C0053E022 /* 80.png in Resources */ = {isa = PBXBuildFile; fileRef = A3EB94BF191CCE9C0053E022 /* 80.png */; };
+		A3EB94C3191CCE9C0053E022 /* 120.png in Resources */ = {isa = PBXBuildFile; fileRef = A3EB94C0191CCE9C0053E022 /* 120.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +72,13 @@
 		A396C1B91919701400BAB165 /* EditTaskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTaskViewController.m; sourceTree = "<group>"; };
 		A396C1BB1919818100BAB165 /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
 		A396C1BC1919818100BAB165 /* Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Task.m; sourceTree = "<group>"; };
+		A3EB94B6191C3BB00053E022 /* bild 1.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bild 1.JPG"; sourceTree = "<group>"; };
+		A3EB94B7191C3BB00053E022 /* bild 2.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bild 2.JPG"; sourceTree = "<group>"; };
+		A3EB94B8191C3BB00053E022 /* bild 3.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bild 3.JPG"; sourceTree = "<group>"; };
+		A3EB94B9191C3BB00053E022 /* bild 4.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bild 4.JPG"; sourceTree = "<group>"; };
+		A3EB94BE191CCE9C0053E022 /* 58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 58.png; sourceTree = "<group>"; };
+		A3EB94BF191CCE9C0053E022 /* 80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80.png; sourceTree = "<group>"; };
+		A3EB94C0191CCE9C0053E022 /* 120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 120.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +160,13 @@
 		A396C18419196D7400BAB165 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A3EB94BE191CCE9C0053E022 /* 58.png */,
+				A3EB94BF191CCE9C0053E022 /* 80.png */,
+				A3EB94C0191CCE9C0053E022 /* 120.png */,
+				A3EB94B6191C3BB00053E022 /* bild 1.JPG */,
+				A3EB94B7191C3BB00053E022 /* bild 2.JPG */,
+				A3EB94B8191C3BB00053E022 /* bild 3.JPG */,
+				A3EB94B9191C3BB00053E022 /* bild 4.JPG */,
 				A396C18519196D7400BAB165 /* Task List Assignment-Info.plist */,
 				A396C18619196D7400BAB165 /* InfoPlist.strings */,
 				A396C18919196D7400BAB165 /* main.m */,
@@ -249,8 +270,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				A396C19619196D7400BAB165 /* Images.xcassets in Resources */,
+				A3EB94BA191C3BB00053E022 /* bild 1.JPG in Resources */,
 				A396C18819196D7400BAB165 /* InfoPlist.strings in Resources */,
+				A3EB94BD191C3BB00053E022 /* bild 4.JPG in Resources */,
+				A3EB94BB191C3BB00053E022 /* bild 2.JPG in Resources */,
 				A396C19119196D7400BAB165 /* Main.storyboard in Resources */,
+				A3EB94C2191CCE9C0053E022 /* 80.png in Resources */,
+				A3EB94C3191CCE9C0053E022 /* 120.png in Resources */,
+				A3EB94C1191CCE9C0053E022 /* 58.png in Resources */,
+				A3EB94BC191C3BB00053E022 /* bild 3.JPG in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -480,6 +508,7 @@
 				A396C1AE19196D7400BAB165 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A396C1AF19196D7400BAB165 /* Build configuration list for PBXNativeTarget "Task List AssignmentTests" */ = {
 			isa = XCConfigurationList;
@@ -488,6 +517,7 @@
 				A396C1B119196D7400BAB165 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

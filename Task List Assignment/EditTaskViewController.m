@@ -32,6 +32,14 @@
     self.taskDatePicker.date = self.editTask.taskDate;
     self.taskTitleTextField.delegate = self;
     self.taskInfoTextView.delegate = self;
+    if (self.editTask.taskCompletion)
+    {
+        [self.completeTaskButton setTitle:@"✔️ Task Completed" forState:UIControlStateNormal];
+    }
+    else
+    {
+        [self.completeTaskButton setTitle:@"Complete Task" forState:UIControlStateNormal];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -58,6 +66,20 @@
     self.editTask.taskDate = self.taskDatePicker.date;
     [self.delegate didSaveEdit:self.editTask destinationIndexPath:self.sourceIndexPath];
     [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+- (IBAction)completeTaskButtonPressed:(UIButton *)sender
+{
+    self.editTask.taskCompletion = !self.editTask.taskCompletion;
+    [self.delegate didSaveEdit:self.editTask destinationIndexPath:self.sourceIndexPath];
+    if (self.editTask.taskCompletion)
+    {
+        [self.completeTaskButton setTitle:@"✔️ Task Completed" forState:UIControlStateNormal];
+    }
+    else
+    {
+        [self.completeTaskButton setTitle:@"Complete Task" forState:UIControlStateNormal];
+    }
 }
 
 #pragma mark - UITextField Delegate
